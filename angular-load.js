@@ -10,10 +10,10 @@
 			function loader(createElement) {
 				var promises = {};
 
-				return function(url) {
+				return function(url, attributes) {
 					if (typeof promises[url] === 'undefined') {
 						var deferred = $q.defer();
-						var element = createElement(url);
+						var element = createElement(url, attributes);
 
 						element.onload = element.onreadystatechange = function (e) {
 							$timeout(function () {
@@ -38,9 +38,12 @@
 			 * @param src The url of the script to load dynamically
 			 * @returns {*} Promise that will be resolved once the script has been loaded.
 			 */
-			this.loadScript = loader(function (src) {
+			this.loadScript = loader(function (src, attributes) {
 				var script = document.createElement('script');
 
+        for(var key in attributes) {
+          script[key] = attributes[key]
+        }
 				script.src = src;
 
 				document.body.appendChild(script);
