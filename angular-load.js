@@ -42,7 +42,7 @@
 				var script = document.createElement('script');
 
         for(var key in attributes) {
-          script[key] = attributes[key]
+          script.setAttribute(key, attributes[key]);
         }
 				script.src = src;
 
